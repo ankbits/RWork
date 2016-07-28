@@ -1,0 +1,20 @@
+train=read.csv("climate_change.csv",header = T)
+test_climate=subset(train,Year>2006)
+train_climate=subset(train,Year<=2006)
+str(train_climate)
+summary(train_climate)
+plot(train_climate$CO2,train_climate$Temp)
+TempReg = lm(Temp ~ MEI+CO2+CH4+N2O+CFC.11+CFC.12+TSI+Aerosols , data=train_climate)
+summary(TempReg)
+sort(cor(train_climate))
+plot(train_climate$CO2,train_climate$CFC.11 )
+TempReg1 = lm(Temp ~ MEI+N2O+TSI+Aerosols , data=train_climate)
+summary(TempReg1)
+
+bestTempReg=step(TempReg)
+summary(bestTempReg)
+
+TempPrediction=predict(bestTempReg,newdata = test_climate)
+SSE=sum((TempPrediction - test_climate$Temp)^2)
+SST=sum((mean(train_climate$Temp) - test_climate$Temp)^2)
+R2=1-SSE/SST

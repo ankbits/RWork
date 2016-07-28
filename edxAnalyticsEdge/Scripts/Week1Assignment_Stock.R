@@ -1,0 +1,25 @@
+CocaCola=read.csv("CocaColaStock.csv",header=T)
+ProcterGamble=read.csv("ProcterGambleStock.csv",header=T)
+Boeing=read.csv("BoeingStock.csv",header=T)
+GE=read.csv("GEStock.csv",header=T)
+IBM=read.csv("IBMStock.csv",header=T)
+
+IBM$Date = as.Date(IBM$Date, "%m/%d/%y")
+GE$Date = as.Date(GE$Date, "%m/%d/%y")
+CocaCola$Date = as.Date(CocaCola$Date, "%m/%d/%y")
+ProcterGamble$Date = as.Date(ProcterGamble$Date, "%m/%d/%y")
+Boeing$Date = as.Date(Boeing$Date, "%m/%d/%y")
+
+plot(CocaCola$Date,CocaCola$StockPrice,type = "l", col="red")
+lines(ProcterGamble$Date, ProcterGamble$StockPrice,col="blue")
+abline(v=as.Date(c("1995-09-01")), lwd=1,col="pink")
+
+plot(CocaCola$Date[301:432], CocaCola$StockPrice[301:432], type="l", col="red",ylim=c(0,210))
+lines(ProcterGamble$Date, ProcterGamble$StockPrice,col="blue")
+lines(Boeing$Date, Boeing$StockPrice,col="green")
+lines(GE$Date, GE$StockPrice,col="yellow")
+lines(IBM$Date, IBM$StockPrice,col="black")
+abline(v=as.Date(c("1997-09-01")), lwd=1,col="pink")
+abline(v=as.Date(c("1997-11-01")), lwd=1,col="brown")
+
+tapply(IBM$StockPrice, months(IBM$Date), mean)
